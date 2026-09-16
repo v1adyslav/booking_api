@@ -50,6 +50,16 @@ class AddImportRequest extends FormRequest
             'external_import_id' => ['required', 'string', 'max:255', 'unique:imports,external_import_id'],
             'status' => ['required', 'in:pending,processing,completed,failed'],
             'sent_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            'offers' => ['nullable', 'array'],
+/*            'offers.*.external_id' => ['required_with:offers', 'string'],
+            'offers.*.check_in' => ['required_with:offers', 'date'],
+            'offers.*.check_out' => ['required_with:offers', 'date', 'after_or_equal:offers.*.check_in'],
+            'offers.*.max_guests' => ['required_with:offers', 'integer', 'min:1'],
+            'offers.*.price' => ['required_with:offers', 'numeric', 'min:0'],
+            'offers.*.currency' => ['required_with:offers', 'string', 'size:3'],
+            'offers.*.available_units' => ['nullable', 'integer', 'min:0'],
+            'offers.*.expires_at' => ['nullable', 'date'],
+            */
         ];
     }
 }

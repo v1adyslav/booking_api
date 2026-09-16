@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddImportRequest;
 use App\Http\Resources\{ImportResource, ImportShortResource};
+use App\Jobs\ProcessImportJob;
 use App\Models\Import;
 use App\Models\Supplier;
 use Illuminate\Http\JsonResponse;
@@ -22,10 +23,12 @@ class ImportController extends Controller
     public function store(AddImportRequest $request): JsonResponse
     {
         $data = $request->validated();
+        $offers = $data['offers'] ?? [];
+        unset($data['offers']);
 
         $import = Import::create($data);
 
-        // ProcessImportJob::dispatch($import);
+        ProcessImportJob::dispatch($import, $offers);
 
         return response()->json(new ImportShortResource($import), 202);
     }
