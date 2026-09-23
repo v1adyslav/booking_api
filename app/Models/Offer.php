@@ -9,8 +9,13 @@ class Offer extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'external_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         'external_id',
+        'property_code',
         'check_in',
         'check_out',
         'max_guests',
@@ -18,7 +23,7 @@ class Offer extends Model
         'currency',
         'available_units',
         'expires_at',
-        'import_id'
+        'import_id',
     ];
 
     public function import()
@@ -27,6 +32,6 @@ class Offer extends Model
     }
     public function property()
     {
-        return $this->hasOne(Property::class);
+        return $this->belongsTo(Property::class, 'property_code', 'code');
     }
 }
